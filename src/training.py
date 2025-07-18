@@ -33,7 +33,11 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 #Загружаем модель
 num_classes = 5
-model = models.mobilenet_v3_small(num_classes)
+model = models.mobilenet_v3_small(pretrained = True)
+model.classifier[3] = torch.nn.Linear(
+    in_features=model.classifier[3].in_features,
+    out_features = num_classes
+)
 
 #Определяем пути к датасету
 train_data_dir = '../dataset/train'
