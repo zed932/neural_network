@@ -67,7 +67,11 @@ if __name__ == '__main__':
 
     app.run(host='0.0.0.0', port=8080, debug=True)
 
-
+# PyCharm - terminal -->
+# pip install flask
+# python server.py
+# -------------------------
 # WIB + R - cmd - ipconfig
+# -------------------------
 # Запускать следующую команду через PowerShell от имени администратора
 # New-NetFirewallRule -DisplayName "Allow Port 8080" -Direction Inbound -LocalPort 8080 -Protocol TCP -Action Allow
