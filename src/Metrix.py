@@ -41,7 +41,11 @@ val_loader = DataLoader(val_dataset, batch_size = batch_size, shuffle = False)
 
 #Загружаем модель c нашими весами
 num_classes = 5
-model = models.mobilenet_v3_small(num_classes)
+model = models.mobilenet_v3_small(pretrained = True)
+model.classifier[3] = torch.nn.Linear(
+    in_features=model.classifier[3].in_features,
+    out_features = num_classes
+)
 model.load_state_dict(torch.load('best_model.pth'))
 model.to(device)
 
