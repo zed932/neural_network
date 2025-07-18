@@ -2,10 +2,15 @@ from flask import Flask, request, jsonify
 import os
 from datetime import datetime
 import socket
+from flask import send_from_directory
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'received_photos'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+@app.route('/result.txt')
+def get_result_file():
+    return send_from_directory('.', 'result.txt')
 
 
 def get_local_ip():
@@ -67,11 +72,6 @@ if __name__ == '__main__':
 
     app.run(host='0.0.0.0', port=8080, debug=True)
 
-# PyCharm - terminal -->
-# pip install flask
-# python server.py
-# -------------------------
-# WIB + R - cmd - ipconfig
-# -------------------------
+
 # Запускать следующую команду через PowerShell от имени администратора
 # New-NetFirewallRule -DisplayName "Allow Port 8080" -Direction Inbound -LocalPort 8080 -Protocol TCP -Action Allow
