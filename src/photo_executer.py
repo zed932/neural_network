@@ -67,17 +67,16 @@ class Handler(FileSystemEventHandler):
             # Логика для записи результата в result.txt
             class_names = ['cat', 'cow', 'dog', 'horse', 'human']
             class_name = class_names[top_class]
-            if class_name == 'human':
-                if top_prob > 0.8:
-                    with open('../server/result.txt', 'w') as f:
+            if class_name == 'human' and top_prob > 0.8:
+                with open('../server/result.txt', 'w') as f:
                         f.write('true')
                         print('work')
                         f.close()
-                else:
-                    with open('../server/result.txt', 'w') as f:
-                        f.write('false')
-                        print('dont work')
-                        f.close()
+            else:
+                with open('../server/result.txt', 'w') as f:
+                    f.write('false')
+                    print('dont work')
+                    f.close()
 
 event_handler = Handler()
 observer = Observer()
