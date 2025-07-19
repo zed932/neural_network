@@ -72,10 +72,12 @@ class Handler(FileSystemEventHandler):
                     with open('../server/result.txt', 'w') as f:
                         f.write('true')
                         print('work')
-            else:
-                with open('../server/result.txt', 'w') as f:
-                    f.write('false')
-                    print('dont work')
+                        f.close()
+                else:
+                    with open('../server/result.txt', 'w') as f:
+                        f.write('false')
+                        print('dont work')
+                        f.close()
 
 event_handler = Handler()
 observer = Observer()
