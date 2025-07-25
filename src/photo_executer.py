@@ -41,7 +41,7 @@ preprocess = transforms.Compose([
 
 #Создаём наблюдатель, который будет отслеживать появление новых файлов в папке
 
-folder_path = '../server/received_photos'
+folder_path = '../received_photos'
 class Handler(FileSystemEventHandler):
     def on_created(self, event):
         if not event.is_directory:
@@ -56,9 +56,9 @@ class Handler(FileSystemEventHandler):
             # Прогоняем через модель
             with torch.no_grad():
                 output = model(image_tensor)
-
+                print(output)
             # Применяем softmax для получения вероятностей классов
-            probabilities = torch.nn.functional.softmax(output[0], dim=0).cpu()
+            probabilities = torch.nn.functional.softmax(output, dim=1).cpu()
 
             # Получаем вероятность верного определения и название класса
             top_prob, top_class = torch.topk(probabilities, 1)
@@ -67,15 +67,16 @@ class Handler(FileSystemEventHandler):
             # Логика для записи результата в result.txt
             class_names = ['cat', 'cow', 'dog', 'horse', 'human']
             class_name = class_names[top_class]
-            if class_name == 'human':
-                if top_prob > 0.8:
-                    with open('../server/result.txt', 'w') as f:
+            if (class_name == 'human') and (top_prob > 0.8):
+                with open('../result.txt', 'w') as f:
                         f.write('true')
-                        print('work')
+                        print('work', class_name)
+                        f.close()
             else:
-                with open('../server/result.txt', 'w') as f:
+                with open('../result.txt', 'w') as f:
                     f.write('false')
-                    print('dont work')
+                    print('dont work', class_name)
+                    f.close()
 
 event_handler = Handler()
 observer = Observer()

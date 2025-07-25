@@ -43,6 +43,7 @@ image_tensor = image_tensor.unsqueeze(0).to(device)
 #Прогоняем через модель
 with torch.no_grad():
     output = model(image_tensor)
+    print(output)
 
 #Применяем softmax для получения вероятностей классов
 probabilities = torch.nn.functional.softmax(output[0], dim=0).cpu()
